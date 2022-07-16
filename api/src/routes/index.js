@@ -1,12 +1,39 @@
 const { Router } = require('express');
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');
-
+const {Videogame, Genre} = require("../db")
+const axios = require("axios");
+const { findById } = require('../tools');
 
 const router = Router();
 
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
+// ------------------------------------
+router.get('/videogames/:idVideogame', (req, res)=>{
+  const {idVideogame} = req.params
+  const finded = findById(idVideogame)
+
+  return res.send("No id given")
+})
+
+// ------------------------------------
+router.get('/videogames', (req, res)=>{
+  const {name} = req.query
+  if(!name){
+    return res.send("No query given")
+  }
+})
+
+
+// ------------------------------------
+router.post('/videogames', (req, res)=>{
+
+})
+
+// ------------------------------------
+router.get('/genres', (req, res)=>{
+
+})
+
+
+
 
 
 module.exports = router;
