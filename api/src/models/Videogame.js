@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, DATE } = require('sequelize');
 
 
 module.exports = (sequelize) => {
@@ -18,10 +18,12 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     released:{
-      type: DataTypes.DATEONLY
+      type: DataTypes.DATEONLY,
+      defaultValue: DataTypes.NOW,
     },
     rating:{
       type: DataTypes.FLOAT,
+      defaultValue: 0.0,
     },
     image: {
       type: DataTypes.STRING,
@@ -29,6 +31,7 @@ module.exports = (sequelize) => {
     },
     platforms:{
       type: DataTypes.JSON,
+      allowNull: false
     },
   },
   {timestamps: false});
