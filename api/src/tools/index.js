@@ -26,7 +26,7 @@ const DbFindById = async (id) => {
 const ApiFindById = async (id) => {
   try {
     const apiSearch = (await axios.get(`https://api.rawg.io/api/games/${id}?key=${apiKey}`)).data
-    const mapGenres = apiSearch.genres.map(e => { return e.name })
+    const mapGenres = apiSearch.genres.map(e => { return { name: e.name } })
     const mapPlatforms = apiSearch.platforms.map(e => { return e.platform.name })
     return {
       id: id,
@@ -68,7 +68,7 @@ const getAllGames = async () => {
   let apiSearch = (await axios.get(`https://api.rawg.io/api/games?key=${apiKey}`)).data.results
 
   apiSearch.forEach(game => {
-    game.genres = game.genres.map(genre => { return genre.name })
+    game.genres = game.genres.map(genre => { return { name: genre.name } })
     game.platforms = game.platforms.map(pf => { return pf.platform.name })
   })
 
@@ -136,14 +136,16 @@ const loadGenres = async () => {
 // Retorna true si creó el game, caso contrario false
 const postGame = async (game) => {
 
-  console.log(game.name,
+  console.log(
+    game.name,
     game.image,
     game.rating,
     game.released,
     game.platforms,
     game.genres,
-    game.description)
-    
+    game.description
+  )
+
   const games = await findByName(game.name)
   const equal = games.filter(el => el.name.toLowerCase() === game.name.toLowerCase())
   if (equal.length) {
