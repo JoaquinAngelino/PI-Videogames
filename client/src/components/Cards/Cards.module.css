@@ -1,0 +1,10 @@
+.CardsContainer{
+  padding: 30px;
+  padding-top: 20px;
+  column-gap: 25px;
+  row-gap: 25px;
+  float: right;
+  margin-right: 4%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}

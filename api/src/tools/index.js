@@ -49,7 +49,7 @@ const findById = async (id) => {
   const db = await DbFindById(id)
   const api = await ApiFindById(id)
   if (!db && !api) { return null }
-  return db ? db : api
+  return db ? db : [api]
 }
 
 // ------------------------------------
@@ -65,14 +65,24 @@ const getAllGames = async () => {
     }
   })
 
-  let apiSearch = (await axios.get(`https://api.rawg.io/api/games?key=${apiKey}`)).data.results
+  let links = []
+  for (let i = 1; i < 6; i++){
+    links.push(axios.get(`https://api.rawg.io/api/games?key=${apiKey}&page=${i}`))
+  }
+  let apiSearch = await Promise.all(links)
+  
+  let results = []
+  apiSearch.forEach(search => {
+    results.push(search.data.results)
+  })
+  results = results.flat()
 
-  apiSearch.forEach(game => {
+  results.forEach(game => {
     game.genres = game.genres.map(genre => { return { name: genre.name } })
     game.platforms = game.platforms.map(pf => { return pf.platform.name })
   })
 
-  apiSearch = apiSearch.map(el => {
+  results = results.map(el => {
     return {
       id: el.id,
       name: el.name,
@@ -82,9 +92,10 @@ const getAllGames = async () => {
       platforms: el.platforms,
       genres: el.genres,
       description: el.description,
+      createdByUser: false,
     }
   })
-  return apiSearch.concat(dbSearch)
+  return results.concat(dbSearch)
 }
 
 // ------------------------------------

@@ -1,0 +1,26 @@
+.pagination{
+  display:block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.pagList{
+  list-style: none;
+  color: white;
+  width: 20px;
+  height: 20px;
+  font-size: 24px;
+  padding: 0px 10px 5px 10px;
+  border-radius: 5%;
+  transition: all 0.3s;
+  cursor: pointer;
+  display: inline;
+}
+
+.pagList:hover{
+  background-color: #3f3f3f;
+}
+
+.currentPage{
+  background-color: #3f3f3f;
+}

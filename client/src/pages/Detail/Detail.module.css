@@ -1,0 +1,25 @@
+.detailDiv{
+  width: 50%;
+  background-color: #252525;
+  display: block;
+  margin: auto;
+  padding: 4%;
+  border-radius: 3%;
+  margin-top: 30px;
+}
+
+.instructions{
+  display:block;
+}
+
+.homeBtn{
+  width: 48px;
+  /* background-color: #8a7140; */
+  box-shadow: none;
+}
+.homeBtn:hover{
+  width: 48px;
+  background-color: #8a7140;
+  box-shadow: none;
+  border-radius: 10%;
+}

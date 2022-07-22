@@ -1,0 +1,43 @@
+.SideBarcontainer{
+  height: 100vh;
+  grid-column-start: 1;
+  grid-row-start: 1;
+  grid-row-end: 5;
+  margin: 0 100px;
+  width: 300px;
+}
+
+.sideBarH3{
+  margin-bottom: 0;
+}
+
+.filterList{
+  width: fit-content;
+  border-radius: 3%;
+  text-align: center;
+  cursor: pointer;
+  list-style: none;
+  font-size: 18px;
+  margin: 5px 30px;
+  padding: 7px 13px;
+  display: block;
+  transition: all 0.3s;
+}
+
+.filterList:hover{
+  text-decoration: underline solid rgba(54, 21, 21, 0.822);
+  background-color: #69433f;
+  box-shadow: rgba(0, 0, 0, 0.651) 0px 2px 6px;
+}
+
+.filterTitle{
+  margin: 20px 0 0 0;
+}
+.imgStyle{
+  width: 450px;
+  box-shadow: none;
+}
+
+.filterUl{
+  border-bottom: 1px solid black;
+} 

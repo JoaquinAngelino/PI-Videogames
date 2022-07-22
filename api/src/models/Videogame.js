@@ -33,6 +33,10 @@ module.exports = (sequelize) => {
       type: DataTypes.JSON,
       allowNull: false
     },
+    createdByUser: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    }
   },
   {timestamps: false});
 };
