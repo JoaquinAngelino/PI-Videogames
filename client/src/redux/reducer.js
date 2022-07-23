@@ -14,7 +14,7 @@ function rootReducer(state = initialState, { type, payload }) {
     // ------------------------------------
     // ------------------------------------
     case FIND_GAME_BY_ID:
-      if (!payload.length) {
+      if (!payload) {
         return state
       }
       return { ...state, games: payload }

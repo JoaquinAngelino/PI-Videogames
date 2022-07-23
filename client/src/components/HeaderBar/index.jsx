@@ -10,6 +10,7 @@ export default function SearchBar() {
   const [value, setValue] = useState('')
 
   const dispatch = useDispatch()
+  
   const handleSubmit = (e) => {
     e.preventDefault()
     if (value !== '') {

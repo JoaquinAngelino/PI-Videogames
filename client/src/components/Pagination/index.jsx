@@ -1,7 +1,7 @@
 import React from "react";
 import style from './Pagination.module.css'
 
-export default function Pagination({ postPerPage, totalPosts, paginate }) {
+export default function Pagination({ postPerPage, totalPosts, paginate, currPage }) {
 
   let pages = []
 
@@ -12,7 +12,7 @@ export default function Pagination({ postPerPage, totalPosts, paginate }) {
   return (
     <nav className={style.pagination}>
       <ul>
-        {pages.map(e => <li key={e} className={style.pagList} onClick={()=>paginate(e)} >{e}</li>)}
+        {pages.map(e => <li key={e} className={e === currPage ? style.currentPage : style.pagList} onClick={()=>paginate(e)} >{e}</li>)}
       </ul>
     </nav>
   )

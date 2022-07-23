@@ -8,23 +8,25 @@ export const FIND_All_GAMES = 'FIND_All_GAMES'
 
 
 export const searchGame = (id) => {
+  console.log("llamada a searchGame", id);
   if (typeof id === 'undefined') {
     return async function (dispatch) {
       let r = await axios.get(`http://localhost:3001/videogames`)
+      console.log("dentro de undefined", id);
       return dispatch({ type: FIND_All_GAMES, payload: r.data })
     }
   }
   if (isNaN(Number(id))) {
     return async function (dispatch) {
-      console.log("typeof id === 'NaN'");
       let r = await axios.get(`http://localhost:3001/videogames?name=${id}`)
+      console.log("dentro de isNaN", id);
       return dispatch({ type: FIND_GAME_BY_ID, payload: r.data })
     }
   }
   else {
     return async function (dispatch) {
-      console.log("typeof id === 'Number'");
       let r = await axios.get(`http://localhost:3001/videogame/${id}`)
+      console.log("dentro de Number", id);
       return dispatch({ type: FIND_GAME_BY_ID, payload: r.data })
     }
   }

@@ -23,9 +23,9 @@ export default function Cards() {
 
   return (
     <>
-      <Pagination postPerPage={postPerPage} totalPosts={games.length} paginate={paginate} />
+      <Pagination postPerPage={postPerPage} totalPosts={games.length} paginate={paginate} currPage={currentPage} />
       <div className={style.CardsContainer}>
-        {pageGames.length > 0 && pageGames.map(game => <Card
+        {pageGames && pageGames.map(game => <Card
           key={game.id}
           id={game.id}
           name={game.name}
