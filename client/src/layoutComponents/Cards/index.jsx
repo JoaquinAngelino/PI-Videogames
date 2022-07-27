@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import style from './Cards.module.css'
-import Card from '../Card';
-import Pagination from '../Pagination';
+import Card from '../../components/Card';
+import Pagination from '../../components/Pagination';
 
 export default function Cards() {
   const [currentPage, setCurrentPage] = useState(1)
@@ -22,7 +22,7 @@ export default function Cards() {
   const paginate = (number) => { setCurrentPage(number) }
 
   return (
-    <>
+    <div>
       <Pagination postPerPage={postPerPage} totalPosts={games.length} paginate={paginate} currPage={currentPage} />
       <div className={style.CardsContainer}>
         {pageGames && pageGames.map(game => <Card
@@ -34,7 +34,7 @@ export default function Cards() {
           image={game.image}
         />)}
       </div>
-    </>
+    </div>
   )
 
 };

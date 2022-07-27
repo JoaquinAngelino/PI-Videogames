@@ -1,0 +1,12 @@
+.filterTitle{
+  text-align: center;
+}
+
+.filterLi{
+  list-style: none;
+  cursor: pointer;
+}
+
+.filterLi:hover{
+  background-color: #3f3f3f;
+}

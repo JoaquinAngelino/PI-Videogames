@@ -1,0 +1,13 @@
+.notFoundDiv{
+  width: 40%;
+  margin: auto;
+  text-align: center;
+  margin-top: 20%;
+  background-color: #252525;
+  border-radius: 12px;
+  padding:  40px 0 55px 0;
+}
+
+.notFoundSpan{
+  font-weight: 600;
+}

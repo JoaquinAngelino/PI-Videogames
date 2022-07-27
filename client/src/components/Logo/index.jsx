@@ -13,7 +13,7 @@ export default function Detail() {
   }
 
   return (
-    <Link to="/home" className={style.logoLink}>
+    <Link to="/home">
       <img onClick={handleClick} className={style.logo} src={logo} alt="Home" />
     </Link>
   )

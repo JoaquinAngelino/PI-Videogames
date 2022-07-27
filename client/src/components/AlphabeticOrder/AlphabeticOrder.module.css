@@ -1,0 +1,7 @@
+.sortBtn{
+  /* display: inline-block; */
+}
+
+.sortBtn:hover{
+  background-color: #3f3f3f;
+}

@@ -1,10 +1,11 @@
-import { FIND_GAME_BY_ID, FILTER_BY_GENRE, ORDER_BY_RATING, ALPHABETIC_ORDER, FIND_All_GAMES, FILTER_BY_USERMADE, } from './actions'
+import { FIND_GAME_BY_ID, FILTER_BY_GENRE, ORDER_BY_RATING, ALPHABETIC_ORDER, FIND_All_GAMES, FILTER_BY_USERMADE, GET_GENRES, } from './actions'
 
 
 const initialState = {
   games: [],
   filter: '',
   allGames: [],
+  genres: [],
 }
 
 function rootReducer(state = initialState, { type, payload }) {
@@ -21,7 +22,7 @@ function rootReducer(state = initialState, { type, payload }) {
     // ------------------------------------
     // ------------------------------------
     case FILTER_BY_GENRE:
-      if (state.filter === payload) {
+      if (state.filter === payload || payload === 'none') {
         return { ...state, games: state.allGames, filter: '' }
       }
       let genreFiltered = state.allGames.filter(game => game.genres.some(genre => genre.name === payload))
@@ -60,7 +61,7 @@ function rootReducer(state = initialState, { type, payload }) {
     // ------------------------------------
     // ------------------------------------
     case ALPHABETIC_ORDER:
-      let sortedName = JSON.parse(JSON.stringify(state.recipes))
+      let sortedName = JSON.parse(JSON.stringify(state.games))
       if (payload === 'asc') {
         sortedName.sort((a, b) => {
           if (a.name > b.name) { return 1 }
@@ -74,7 +75,11 @@ function rootReducer(state = initialState, { type, payload }) {
           return 0
         })
       }
-      return { ...state, recipes: sortedName }
+      return { ...state, games: sortedName }
+    // ------------------------------------
+    // ------------------------------------
+    case GET_GENRES:
+      return {...state, genres: payload}
     // ------------------------------------
     // ------------------------------------
     default:
