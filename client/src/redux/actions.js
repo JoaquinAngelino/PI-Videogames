@@ -1,6 +1,6 @@
 import axios from 'axios'
 export const FIND_GAME_BY_ID = 'FIND_GAME_BY_ID'
-export const FILTER_BY_GENRE = 'FILTER_BY_GENRE'
+export const FILTER_GAMES = 'FILTER_GAMES'
 export const FILTER_BY_USERMADE = 'FILTER_BY_USERMADE'
 export const ORDER_BY_RATING = 'ORDER_BY_RATING'
 export const ALPHABETIC_ORDER = 'ALPHABETIC_ORDER'
@@ -29,9 +29,9 @@ export const searchGame = (id) => {
   }
 }
 
-export const filterByGenre = (genre) => {
+export const filterGames = (genre) => {
   return function (dispatch) {
-    return dispatch({ type: FILTER_BY_GENRE, payload: genre })
+    return dispatch({ type: FILTER_GAMES, payload: genre })
   }
 }
 
@@ -44,12 +44,6 @@ export const alphabeticOrder = (ord) => {
 export const orderByRating = (ord) => {
   return function (dispatch) {
     return dispatch({ type: ORDER_BY_RATING, payload: ord })
-  }
-}
-
-export const filterByUsermade = (usermade) => {
-  return function (dispatch) {
-    return dispatch({ type: FILTER_BY_USERMADE, payload: usermade })
   }
 }
 

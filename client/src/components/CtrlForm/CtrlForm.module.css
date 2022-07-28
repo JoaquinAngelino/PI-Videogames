@@ -23,7 +23,7 @@ input{
   box-sizing: border-box;
   color: #a7a7a7;
   cursor: pointer;
-  display: inline-flex;
+  display: block;
   fill: currentcolor;
   font-size: 14px;
   font-weight: 600;
@@ -52,4 +52,5 @@ input{
 
 .checkList{
   width:  50%;
+  float: left;
 }

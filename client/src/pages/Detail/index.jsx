@@ -30,6 +30,7 @@ export default function Detail() {
       rating={game.rating}
       genres={game.genres}
       platforms={game.platforms}
+      released={game.released}
       /> : <h2>Loading</h2> }
     </>
   )

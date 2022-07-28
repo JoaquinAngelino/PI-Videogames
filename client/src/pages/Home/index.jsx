@@ -15,7 +15,6 @@ export default function Home() {
   useEffect(()=>{
     dispatch(getGenres())
     dispatch(searchGame())
-    console.log("Ejecutando useEffect() en home")
   })
 
   return (

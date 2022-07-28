@@ -1,4 +1,4 @@
-import { FIND_GAME_BY_ID, FILTER_BY_GENRE, ORDER_BY_RATING, ALPHABETIC_ORDER, FIND_All_GAMES, FILTER_BY_USERMADE, GET_GENRES, } from './actions'
+import { FIND_GAME_BY_ID, FILTER_GAMES, ORDER_BY_RATING, ALPHABETIC_ORDER, FIND_All_GAMES, GET_GENRES, } from './actions'
 
 
 const initialState = {
@@ -21,25 +21,22 @@ function rootReducer(state = initialState, { type, payload }) {
       return { ...state, games: payload }
     // ------------------------------------
     // ------------------------------------
-    case FILTER_BY_GENRE:
+    case FILTER_GAMES:
+      console.log("FILTER_GAMES: ",payload )
+      console.log("FILTER: ", state.filter )
       if (state.filter === payload || payload === 'none') {
         return { ...state, games: state.allGames, filter: '' }
+      }
+      if(payload === 'ApiGame'){
+        let filtered = state.allGames.filter(game => !game.createByUser)
+        return { ...state, filter: payload, games: filtered }
+      }
+      if(payload === 'UserMade'){
+        let filtered = state.allGames.filter(game => game.createByUser)
+        return { ...state, filter: payload, games: filtered }
       }
       let genreFiltered = state.allGames.filter(game => game.genres.some(genre => genre.name === payload))
       return { ...state, filter: payload, games: genreFiltered }
-    // ------------------------------------
-    // ------------------------------------
-    case FILTER_BY_USERMADE:
-      if (state.filter === payload || payload === 'none') {
-        return { ...state, games: state.allGames, filter: '' }
-      }
-      let filtered
-      if (payload === 'true') {
-        filtered = state.allGames.filter(game => game.createByUser)
-      } else {
-        filtered = state.allGames.filter(game => !game.createByUser)
-      }
-      return { ...state, filter: payload, games: filtered }
     // ------------------------------------
     // ------------------------------------
     case ORDER_BY_RATING:

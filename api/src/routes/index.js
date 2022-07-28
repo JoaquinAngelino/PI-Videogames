@@ -38,7 +38,7 @@ router.post('/videogame', async (req, res) => {
     genres,
     description
   } = req.body
-  if (name && description && platforms) {
+  if (name && description && rating) {
     const created = await postGame({ name, image, rating, released, platforms, genres, description })
     return res.send(created)
   }
