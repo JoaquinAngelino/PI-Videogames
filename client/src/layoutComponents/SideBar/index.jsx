@@ -12,7 +12,7 @@ export default function SideBar() {
       <AlphabeticOrder />
       <RatingOrder />
       <Filters/>
-      <Link to='/form'><h2>Create your own Game</h2></Link>
+      <Link to='/form'><h2 className={style.SideBarH2}>Create your own Game</h2></Link>
     </div>
   )
 };

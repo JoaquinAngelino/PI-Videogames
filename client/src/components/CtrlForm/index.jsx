@@ -1,24 +1,24 @@
 import axios from "axios"
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { searchRecipe } from "../redux/actions"
-import styles from "../styles/CtrlForm.module.css"
+import { searchGame } from "../../redux/actions"
+import styles from "./CtrlForm.module.css"
 
 
 export default function CtrlForm() {
 
-  useDispatch(searchRecipe())
-  const allRecipes = useSelector(state => state.recipes)
-  const allNames = allRecipes.map(e => e.title)
+  useDispatch(searchGame())
+  const allGames = useSelector(state => state.allGames)
+  const allNames = allGames.map(game => game.name)
   const [error, setError] = useState({})
 
   const [input, setInput] = useState({
-    title: "",
-    summary: "",
-    healthScore: 0,
-    analyzedInstructions: "",
+    name: "",
+    description: "",
+    rating: 0,
+    platforms: [],
     image: "",
-    diets: [],
+    genres: [],
   })
 
   const handleChange = (e) => {
@@ -34,115 +34,157 @@ export default function CtrlForm() {
 
   function validate(input) {
     let error = {}
-    if (!input.title) {
-      error.title = 'The title of the recipe is required'
-    } else if (!/[a-zA-Z]{4}/.test(input.title)) {
-      error.title = 'The title must have only letters and at least 4 characters'
+    if (!input.name) {
+      error.nane = 'The name of the game is required'
+    } else if (!/[a-zA-Z]{4}/.test(input.name)) {
+      error.name = 'The name must have only letters and at least 4 characters'
     }
-    if (!input.summary) {
-      error.summary = 'The summary of the recipe is required'
-    } else if (input.summary.length < 10 || input.summary.length > 500) {
-      error.summary = 'The summary must have between 10 and 500 characters'
+    if (!input.description) {
+      error.description = 'The description of the game is required'
+    } else if (input.description.length < 10 || input.description.length > 500) {
+      error.description = 'The description must have between 10 and 500 characters'
     }
-    if (input.healthScore < 0 || input.healthScore > 100) {
-      error.healthScore = 'Must be a number between 0 and 100'
-    }
-    if (input.analyzedInstructions && input.analyzedInstructions.length < 10) {
-      error.analyzedInstructions = 'The instructions must have more than 10 characters'
+    if (input.rating < 0 || input.rating > 5) {
+      error.rating = 'Must be a float between 0 and 5'
     }
     if (input.image !== "" && !/^(ftp|http|https):\/\/[^ "]+$/.test(input.image)) {
       error.image = "Image must be a URL"
     }
-    console.log(error)
     return error
   }
 
-  const handleSelect = (e) => {
+  const handleSelect = (e) => {// check
     setInput({
       ...input,
-      diets: input.diets.includes(e.target.name) ? input.diets.filter(el => el !== e.target.name) : [...input.diets, e.target.name]
+      genres: input.genres.includes(e.target.name) ? input.genres.filter(el => el !== e.target.name) : [...input.Genres, e.target.name]
     })
   }
 
   const postRecipe = async (data) => {
-    await axios.post("http://localhost:3001/recipes", data)
+    await axios.post("http://localhost:3001/videogame", data)
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (error.title || error.summary || error.healthScore || error.analyzedInstructions || error.image) {
+    if (error.name || error.description || error.rating || error.platforms || error.image || input.name === "" || input.description === "") {
       alert('Some fields may be wrong')
       return
     }
-    let titleInput = input.title.toLowerCase()
-    let result = allNames.includes(titleInput)
+    let nameInput = input.name.toLowerCase()
+    let result = allNames.includes(nameInput)
     if (result) {
-      alert('The title is alredy used')
+      alert('The name is alredy used')
     } else {
       postRecipe(input)
       alert('Recipe created successfully')
       setInput({
-        title: "",
-        summary: "",
-        healthScore: 0,
-        analyzedInstructions: "",
+        name: "",
+        description: "",
+        rating: 0,
+        platforms: [],
         image: "",
-        diets: [],
+        genres: [],
       })
     }
   }
 
   return (
     <form action="">
-      <label >Title: <span className={styles.error}>*</span> {error.title && <span className={styles.error}>{error.title}</span>}</label>
-      <input type="text" name="title" value={input.title} onChange={(e) => handleChange(e)} />
-
-      <label >Summary: <span className={styles.error}>*</span> {error.summary && <span className={styles.error}>{error.summary}</span>}</label>
-      <input type="text" name="summary" value={input.summary} onChange={(e) => handleChange(e)} />
-      <label >HealthScore: {error.healthScore && <span className={styles.error}>{error.healthScore}</span>}</label>
-      <input type="number" name="healthScore" value={input.healthScore} onChange={(e) => handleChange(e)} />
-      <label >Instructions: {error.pasoAPaso && <span className={styles.error}>{error.pasoAPaso}</span>}</label>
-      <input type="text" name="analyzedInstructions" value={input.analyzedInstructions} onChange={(e) => handleChange(e)} />
+      <label >Name: <span className={styles.error}>*</span> {error.name && <span className={styles.error}>{error.name}</span>}</label>
+      <input type="text" name="name" value={input.name} onChange={(e) => handleChange(e)} />
+      <label >Description: <span className={styles.error}>*</span> {error.description && <span className={styles.error}>{error.description}</span>}</label>
+      <input type="text" name="description" value={input.description} onChange={(e) => handleChange(e)} />
+      <label >Rating: {error.rating && <span className={styles.error}>{error.rating}</span>}</label>
+      <input type="number" name="rating" step="0.1" value={input.rating} onChange={(e) => handleChange(e)} />
+      <label >Platforms: {error.platforms && <span className={styles.error}>{error.platforms}</span>}</label>
+      <input type="text" name="platforms" value={input.platforms} onChange={(e) => handleChange(e)} />
       <label >Image: {error.image && <span className={styles.error}>{error.image}</span>}</label>
       <input type="url" name="image" placeholder="https://example.com" value={input.image} onChange={(e) => handleChange(e)} />
-      <label >Diets: <br></br></label>
-      <div >
-      <label >
-        <input className={styles.check} type="checkbox" name="vegan" onChange={handleSelect} />
-        Vegan <br></br>
-      </label>
-      <label >
-        <input className={styles.check} type="checkbox" name="ketogenic" onChange={handleSelect} />
-        Ketogenic <br></br>
-      </label>
-      <label >
-        <input className={styles.check} type="checkbox" name="pescetarian" onChange={handleSelect} />
-        Pescarian <br></br>
-      </label>
-      <label >
-        <input className={styles.check} type="checkbox" name="vegetarian" onChange={handleSelect} />
-        Vegetarian <br></br>
-      </label>
-      <label >
-        <input  className={styles.check} type="checkbox" name="whole30" onChange={handleSelect} />
-        Whole 30 <br></br>
-      </label>
-      <label >
-        <input className={styles.check} type="checkbox" name="primal" onChange={handleSelect} />
-        Primal <br></br>
-      </label>
-      <label >
-        <input className={styles.check} type="checkbox" name="paleolithic" onChange={handleSelect} />
-        Paleolithic <br></br>
-      </label>
-      <label >
-        <input className={styles.check} type="checkbox" name="dairyFree" onChange={handleSelect} />
-        Dairy Free <br></br>
-      </label>
-      <label >
-        <input className={styles.check} type="checkbox" name="glutenFree" onChange={handleSelect} />
-        Gluten Free <br></br>
-      </label>
+      {/* <div className={styles.checkList}>
+        <label>Platforms: <br></br></label>
+        <label >
+          <input className={styles.check} type="checkbox" name="Action" onChange={handleSelect} />
+          Action <br></br>
+        </label>
+      </div> */}
+      <div className={styles.checkList}>
+        <label >Genres: <br></br></label>
+        <label >
+          <input className={styles.check} type="checkbox" name="Action" onChange={handleSelect} />
+          Action <br></br>
+        </label>
+        <label >
+          <input className={styles.check} type="checkbox" name="Indie" onChange={handleSelect} />
+          Indie <br></br>
+        </label>
+        <label >
+          <input className={styles.check} type="checkbox" name="Adventure" onChange={handleSelect} />
+          Adventure <br></br>
+        </label>
+        <label >
+          <input className={styles.check} type="checkbox" name="RPG" onChange={handleSelect} />
+          RPG <br></br>
+        </label>
+        <label >
+          <input className={styles.check} type="checkbox" name="Strategy" onChange={handleSelect} />
+          Strategy <br></br>
+        </label>
+        <label >
+          <input className={styles.check} type="checkbox" name="Shooter" onChange={handleSelect} />
+          Shooter <br></br>
+        </label>
+        <label >
+          <input className={styles.check} type="checkbox" name="Casual" onChange={handleSelect} />
+          Casual <br></br>
+        </label>
+        <label >
+          <input className={styles.check} type="checkbox" name="Simulation" onChange={handleSelect} />
+          Simulation <br></br>
+        </label>
+        <label >
+          <input className={styles.check} type="checkbox" name="Puzzle" onChange={handleSelect} />
+          Puzzle <br></br>
+        </label>
+        <label >
+          <input className={styles.check} type="checkbox" name="Arcade" onChange={handleSelect} />
+          Arcade <br></br>
+        </label>
+        <label >
+          <input className={styles.check} type="checkbox" name="Platformer" onChange={handleSelect} />
+          Platformer <br></br>
+        </label>
+        <label >
+          <input className={styles.check} type="checkbox" name="Racing" onChange={handleSelect} />
+          Racing <br></br>
+        </label>
+        <label >
+          <input className={styles.check} type="checkbox" name="Massively Multiplayer" onChange={handleSelect} />
+          Massively Multiplayer <br></br>
+        </label>
+        <label >
+          <input className={styles.check} type="checkbox" name="Sports" onChange={handleSelect} />
+          Sports <br></br>
+        </label>
+        <label >
+          <input className={styles.check} type="checkbox" name="Fighting" onChange={handleSelect} />
+          Fighting <br></br>
+        </label>
+        <label >
+          <input className={styles.check} type="checkbox" name="Family" onChange={handleSelect} />
+          Family <br></br>
+        </label>
+        <label >
+          <input className={styles.check} type="checkbox" name="Board Games" onChange={handleSelect} />
+          Board Games <br></br>
+        </label>
+        <label >
+          <input className={styles.check} type="checkbox" name="Educational" onChange={handleSelect} />
+          Educational <br></br>
+        </label>
+        <label >
+          <input className={styles.check} type="checkbox" name="Card" onChange={handleSelect} />
+          Card <br></br>
+        </label>
       </div>
       <button className={styles.btnClass} type="submit" onClick={handleSubmit}>Ready</button>
       <br></br><span className={styles.error}>* Required Field</span>

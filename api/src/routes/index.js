@@ -28,7 +28,7 @@ router.get('/videogames', async (req, res) => {
 
 // ------------------------------------
 // ------------------------------------
-router.post('/videogames', async (req, res) => {
+router.post('/videogame', async (req, res) => {
   const {
     name,
     image,

@@ -1,0 +1,55 @@
+label{
+  display: block;
+}
+input{
+  width: 80%;
+  margin-bottom: 40px;
+}
+
+.error{
+  color: red
+}
+
+.check{
+  width: 30%;
+  font-size: 20px;
+}
+
+.btnClass{
+  align-items: center;
+  background-color: #454545;
+  border-radius: 24px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #a7a7a7;
+  cursor: pointer;
+  display: inline-flex;
+  fill: currentcolor;
+  font-size: 14px;
+  font-weight: 600;
+  height: 48px;
+  justify-content: center;
+  letter-spacing: .25px;
+  max-width: 100%;
+  overflow: visible;
+  padding: 2px 24px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+  width: auto;
+  margin: 30px;
+}
+
+.btnClass:hover {
+  background: #F6F9FE;
+  color: #353636;
+}
+.btnClass:focus {
+  outline: none;
+  border: 1px solid #000000;
+}
+
+.checkList{
+  width:  50%;
+}

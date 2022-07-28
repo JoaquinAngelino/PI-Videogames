@@ -1,15 +1,17 @@
 import React from "react";
-import CtrlForm from "./CtrlForm";
+import CtrlForm from "../../components/CtrlForm";
 import style from './Form.module.css'
+import Logo from '../../components/Logo'
 
 export default function FormPage() {
 
   return (
-    <div className={style.formContainer}>
-      <div className={style.form}>
+    <>
+      <Logo />
+      <div className={style.formContainer}>
         <h1>Create your own recipe.</h1>
         <CtrlForm />
       </div>
-    </div>
+    </>
   )
 }

@@ -1,12 +1,12 @@
 import React, { useState } from "react"
-import { useEffect } from "react"
+
 import { useDispatch, useSelector } from "react-redux"
-import { filterByGenre, getGenres } from "../../redux/actions"
+import { filterByGenre } from "../../redux/actions"
 import style from "./Filters.module.css"
 
 
 export default function Filters() {
-  const [activeFilter, setActiveFilter] = useState('none')
+  const [activeFilter, setActiveFilter] = useState('None')
   let mapGenres = []
   const dispatch = useDispatch()
 
@@ -20,14 +20,14 @@ export default function Filters() {
 
   if (genres.length) {
     mapGenres = genres.map((genre, idx) => <li className={style.filterLi} key={idx} onClick={() => handleFilter(genre.name)}>{genre.name}</li>)
-    mapGenres.push(<li className={style.filterLi} key={mapGenres.lenght+1} onClick={() => handleFilter('none')}>none</li>)
+    mapGenres.push(<li className={style.filterLi} key={mapGenres.lenght+1} onClick={() => handleFilter('None')}>None</li>)
   }
 
 
   return (
     <>
       <h3>Active filter: {activeFilter}</h3>
-      <ul>
+      <ul className={style.filterUl}>
         {genres.length && mapGenres}
       </ul>
     </>

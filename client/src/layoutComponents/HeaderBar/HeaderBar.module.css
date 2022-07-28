@@ -45,6 +45,7 @@
   text-transform: none;
   width: auto;
   margin: 30px;
+  transition: all 0.2s;
 }
 
 .btnClass:hover {

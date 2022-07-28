@@ -3,10 +3,16 @@
 }
 
 .filterLi{
+  margin-bottom: 5px;
+  transition: all 0.2s;
   list-style: none;
   cursor: pointer;
 }
 
 .filterLi:hover{
   background-color: #3f3f3f;
+}
+
+.filterUl{
+  padding: 0;
 }
