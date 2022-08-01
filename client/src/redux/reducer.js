@@ -22,17 +22,15 @@ function rootReducer(state = initialState, { type, payload }) {
     // ------------------------------------
     // ------------------------------------
     case FILTER_GAMES:
-      console.log("FILTER_GAMES: ",payload )
-      console.log("FILTER: ", state.filter )
-      if (state.filter === payload || payload === 'none') {
+      if (state.filter === payload || payload === 'None') {
         return { ...state, games: state.allGames, filter: '' }
       }
       if(payload === 'ApiGame'){
-        let filtered = state.allGames.filter(game => !game.createByUser)
+        let filtered = state.allGames.filter(game => !game.createdByUser)
         return { ...state, filter: payload, games: filtered }
       }
       if(payload === 'UserMade'){
-        let filtered = state.allGames.filter(game => game.createByUser)
+        let filtered = state.allGames.filter(game => game.createdByUser)
         return { ...state, filter: payload, games: filtered }
       }
       let genreFiltered = state.allGames.filter(game => game.genres.some(genre => genre.name === payload))
@@ -41,7 +39,7 @@ function rootReducer(state = initialState, { type, payload }) {
     // ------------------------------------
     case ORDER_BY_RATING:
       let sortedRating = JSON.parse(JSON.stringify(state.games))
-      if (payload === 'asc')
+      if (payload === 'des')
         sortedRating.sort((a, b) => {
           if (a.rating > b.rating) { return 1 }
           if (b.rating > a.rating) { return -1 }
@@ -59,7 +57,7 @@ function rootReducer(state = initialState, { type, payload }) {
     // ------------------------------------
     case ALPHABETIC_ORDER:
       let sortedName = JSON.parse(JSON.stringify(state.games))
-      if (payload === 'asc') {
+      if (payload === 'des') {
         sortedName.sort((a, b) => {
           if (a.name > b.name) { return 1 }
           if (b.name > a.name) { return -1 }

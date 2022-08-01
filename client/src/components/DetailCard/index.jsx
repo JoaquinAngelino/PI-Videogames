@@ -1,5 +1,6 @@
 import React from "react";
 import style from "./DetailCard.module.css"
+import notAvaiable from "../Card/img_not_avaiable.bmp"
 
 export default function DetailCard({name, image, description, platforms, rating, genres, released}) {
   
@@ -21,20 +22,20 @@ export default function DetailCard({name, image, description, platforms, rating,
     <div className={style.detailDiv}>
       <h2>{name}</h2>
       <div>
-        <p>Rating: {rating}</p>
-        <p>Description: </p>
+        <p><strong>Rating:</strong> {rating}</p>
+        <p><strong>Description:</strong></p>
         <div dangerouslySetInnerHTML={{ __html: description }} />
-        <p>Released: {released}</p>
-        <p>Genres: </p>
+        <p><strong>Released:</strong> {released}</p>
+        <p><strong>Genres:</strong> </p>
         <ul>
           {gameGenres}
         </ul>
-        <p>Platforms: </p>
+        <p><strong>Platforms:</strong> </p>
         <ul>
           {gamePlatforms}
         </ul>
       </div>
-      {image && <img src={image} alt={name} className={style.detailImg}/>}
+      <img src={image ? image : notAvaiable } alt={name} className={style.detailImg}/>
     </div>
   )
 }

@@ -15,7 +15,7 @@ export const searchGame = (id) => {
       return dispatch({ type: FIND_All_GAMES, payload: r.data })
     }
   }
-  if (isNaN(Number(id))) {
+  if (isNaN(Number(id)) && !/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i.test(id)) {
     return async function (dispatch) {
       let r = await axios.get(`http://localhost:3001/videogames?name=${id}`)
       return dispatch({ type: FIND_GAME_BY_ID, payload: r.data })
@@ -29,9 +29,9 @@ export const searchGame = (id) => {
   }
 }
 
-export const filterGames = (genre) => {
+export const filterGames = (filter) => {
   return function (dispatch) {
-    return dispatch({ type: FILTER_GAMES, payload: genre })
+    return dispatch({ type: FILTER_GAMES, payload: filter })
   }
 }
 

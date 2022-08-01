@@ -14,7 +14,6 @@ export default function Detail() {
   
   useEffect(() => {
     dispatch(searchGame(id))
-    console.log("aqui")
   }, [id, dispatch])
     
   let game = useSelector(state => state.games[0])

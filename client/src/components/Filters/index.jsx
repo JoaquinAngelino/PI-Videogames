@@ -10,7 +10,7 @@ export default function Filters() {
   const dispatch = useDispatch()
 
   const handleFilter = (filter) => {
-    filter === activeFilter ? setActiveFilter('none') : setActiveFilter(filter)
+    filter === activeFilter ? setActiveFilter('None') : setActiveFilter(filter)
     dispatch(filterGames(filter))
   }
 

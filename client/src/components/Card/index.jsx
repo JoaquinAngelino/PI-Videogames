@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import style from './Card.module.css'
+import notAvaiable from "./img_not_avaiable.bmp"
 
 export default function Card({id, name, image, rating, genres }) {
 
@@ -11,7 +12,7 @@ export default function Card({id, name, image, rating, genres }) {
   return (
     <Link to={"/detail/" + id}>
       <div className={style.card}>
-        <img className={style.cardImg} src={image} alt={name} />
+        <img className={style.cardImg} src={image ? image : notAvaiable } alt={name} />
         <h2 className={style.cardTitle}>{name}</h2>
         <div className={style.recuadro}>
           <p className={style.cardText}>Rating: {rating}</p>

@@ -1,15 +1,13 @@
 import axios from "axios"
 import React, { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { searchGame } from "../../redux/actions"
+import { useSelector } from "react-redux"
 import styles from "./CtrlForm.module.css"
 
 
 export default function CtrlForm() {
 
-  useDispatch(searchGame())
   const allGames = useSelector(state => state.allGames)
-  const allNames = allGames.map(game => game.name)
+  const allNames = allGames.map(game => game.name.toLowerCase())
   const [error, setError] = useState({})
 
   const [input, setInput] = useState({
@@ -19,7 +17,7 @@ export default function CtrlForm() {
     platforms: [],
     image: "",
     genres: [],
-    released: "0000-00-00"
+    released: ""
   })
 
   const handleChange = (e) => {
@@ -37,9 +35,9 @@ export default function CtrlForm() {
   function validate(input) {
     let error = {}
     if (!input.name) {
-      error.nane = 'The name of the game is required'
-    } else if (!/[a-zA-Z]{4}/.test(input.name)) {
-      error.name = 'The name must have only letters and at least 4 characters'
+      error.name = 'The name of the game is required'
+    } else if (input.name.length < 4 || input.name.length > 16) {
+      error.name = 'The name must have between 4 and 16 characters'
     }
     if (!input.description) {
       error.description = 'The description of the game is required'
@@ -49,11 +47,21 @@ export default function CtrlForm() {
     if (input.rating < 0 || input.rating > 5) {
       error.rating = 'Must be a float between 0 and 5'
     }
-    if (input.image !== "" && !/^(ftp|http|https):\/\/[^ "]+$/.test(input.image)) {
-      error.image = "Image must be a URL"
+    if (input.image) {
+      if (input.image !== "" && !/^(ftp|http|https):\/\/[^ "]+$/.test(input.image)) {
+        error.image = "Image must be a URL"
+      }
     }
-    if (Date.parse(input.released) < Date.parse("1952-01-01") || Date.parse(input.released) > Date.now() ) {
-      error.released = "Invalid date"
+    if (!input.released) {
+      error.released = "The released date is required"
+    }else if (Date.parse(input.released) < Date.parse("1952-01-01") || Date.parse(input.released) > Date.now()) {
+        error.released = "Invalid date"
+      }
+    if (input.platforms.length < 1) {
+      error.platforms = "Select at least one platform"
+    }
+    if (input.genres.length < 1) {
+      error.genres = "Select at least one genre"
     }
     return error
   }
@@ -63,6 +71,10 @@ export default function CtrlForm() {
       ...input,
       genres: input.genres.includes(e.target.name) ? input.genres.filter(el => el !== e.target.name) : [...input.genres, e.target.name]
     })
+    setError(validate({
+      ...input,
+      [e.target.name]: e.target.value
+    }))
     console.log(input);
   }
   const handleSelectPlatform = (e) => {
@@ -70,26 +82,32 @@ export default function CtrlForm() {
       ...input,
       platforms: input.platforms.includes(e.target.name) ? input.platforms.filter(el => el !== e.target.name) : [...input.platforms, e.target.name]
     })
+    setError(validate({
+      ...input,
+      [e.target.name]: e.target.value
+    }))
     console.log(input);
   }
 
 
-  const postRecipe = async (data) => {
+  const postGame = async (data) => {
     await axios.post("http://localhost:3001/videogame", data)
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (error.name || error.description || error.rating || error.platforms || error.image || input.name === "" || input.description === "") {
+    if (error.name || error.description || error.released || error.rating || error.image || input.name === "" || input.description === "" || input.platforms.length < 1 || input.genres.length < 1 || input.released === "") {
       alert('Some fields may be wrong')
+      console.log(error);
       return
     }
     let nameInput = input.name.toLowerCase()
     let result = allNames.includes(nameInput)
+    console.log(result)
     if (result) {
       alert('The name is alredy used')
     } else {
-      postRecipe(input)
+      postGame(input)
       alert('Recipe created successfully')
       setInput({
         name: "",
@@ -98,19 +116,20 @@ export default function CtrlForm() {
         platforms: [],
         image: "",
         genres: [],
+        released: ""
       })
     }
   }
 
   return (
     <form action="">
-      <label >Name: <span className={styles.error}>*</span> {error.name && <span className={styles.error}>{error.name}</span>}</label>
+      <label >Name: <span className={styles.error}>* {error.name ? error.name : ""}</span> </label>
       <input type="text" name="name" value={input.name} onChange={(e) => handleChange(e)} />
 
-      <label >Description: <span className={styles.error}>*</span> {error.description && <span className={styles.error}>{error.description}</span>}</label>
+      <label >Description: <span className={styles.error}>* {error.description ? error.description : ""}</span></label>
       <input type="text" name="description" value={input.description} onChange={(e) => handleChange(e)} />
 
-      <label >Released: <span className={styles.error}>*</span> {error.released && <span className={styles.error}>{error.released}</span>}</label>
+      <label >Released: <span className={styles.error}>* {error.released ? error.released : ""}</span></label>
       <input type="date" name="released" value={input.released} onChange={(e) => handleChange(e)} />
 
       <label >Rating: {error.rating && <span className={styles.error}>{error.rating}</span>}</label>
@@ -120,7 +139,7 @@ export default function CtrlForm() {
       <input type="url" name="image" placeholder="https://example.com" value={input.image} onChange={(e) => handleChange(e)} />
 
       <div className={styles.checkList}>
-        <label>Platforms: <br></br></label>
+        <label>Platforms: <span className={styles.error}>* {error.platforms ? error.platforms : " "}</span><br></br></label>
         <label >
           <input className={styles.check} type="checkbox" name="PC" onChange={handleSelectPlatform} />
           PC <br></br>
@@ -171,7 +190,7 @@ export default function CtrlForm() {
         </label>
       </div>
       <div className={styles.checkList}>
-        <label >Genres: <br></br></label>
+        <label >Genres: <span className={styles.error}>* {error.genres ? error.genres : ""}</span><br></br></label>
         <label >
           <input className={styles.check} type="checkbox" name="Action" onChange={handleSelectGenre} />
           Action <br></br>
