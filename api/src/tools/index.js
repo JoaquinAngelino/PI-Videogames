@@ -66,11 +66,11 @@ const getAllGames = async () => {
   })
 
   let links = []
-  for (let i = 1; i < 6; i++){
+  for (let i = 1; i < 6; i++) {
     links.push(axios.get(`https://api.rawg.io/api/games?key=${apiKey}&page=${i}`))
   }
   let apiSearch = await Promise.all(links)
-  
+
   let results = []
   apiSearch.forEach(search => {
     results.push(search.data.results)
@@ -147,15 +147,7 @@ const loadGenres = async () => {
 // Retorna true si creó el game, caso contrario false
 const postGame = async (game) => {
 
-  console.log(
-    game.name,
-    game.image,
-    game.rating,
-    game.released,
-    game.platforms,
-    game.genres,
-    game.description
-  )
+  console.log(game.name, game.image, game.rating, game.released, game.platforms, game.genres, game.description)
 
   const games = await findByName(game.name)
   const equal = games.filter(el => el.name.toLowerCase() === game.name.toLowerCase())

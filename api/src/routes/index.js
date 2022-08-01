@@ -38,11 +38,16 @@ router.post('/videogame', async (req, res) => {
     genres,
     description
   } = req.body
-  if (name && description && rating) {
+  if (name && description && released) {
     const created = await postGame({ name, image, rating, released, platforms, genres, description })
-    return res.send(created)
+    if (created){
+      return res.json({message: "game created succesfully"})
+    }else{
+      return res.json({message: "game not creted, db error"})
+    }
+    
   }
-  return res.status(400).send(false)
+  return res.status(400).send({message: "game not created, missing fields"})
 })
 
 // ------------------------------------

@@ -29,7 +29,6 @@ export default function CtrlForm() {
       ...input,
       [e.target.name]: e.target.value
     }))
-    console.log(input);
   }
 
   function validate(input) {
@@ -75,7 +74,6 @@ export default function CtrlForm() {
       ...input,
       [e.target.name]: e.target.value
     }))
-    console.log(input);
   }
   const handleSelectPlatform = (e) => {
     setInput({
@@ -86,29 +84,27 @@ export default function CtrlForm() {
       ...input,
       [e.target.name]: e.target.value
     }))
-    console.log(input);
   }
 
 
   const postGame = async (data) => {
-    await axios.post("http://localhost:3001/videogame", data)
+    const res = await axios.post("localhost:3001/videogame", data)
+    console.log(res)
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (error.name || error.description || error.released || error.rating || error.image || input.name === "" || input.description === "" || input.platforms.length < 1 || input.genres.length < 1 || input.released === "") {
       alert('Some fields may be wrong')
-      console.log(error);
       return
     }
     let nameInput = input.name.toLowerCase()
     let result = allNames.includes(nameInput)
-    console.log(result)
     if (result) {
       alert('The name is alredy used')
     } else {
       postGame(input)
-      alert('Recipe created successfully')
+      alert('Game created successfully')
       setInput({
         name: "",
         description: "",
@@ -139,7 +135,7 @@ export default function CtrlForm() {
       <input type="url" name="image" placeholder="https://example.com" value={input.image} onChange={(e) => handleChange(e)} />
 
       <div className={styles.checkList}>
-        <label>Platforms: <span className={styles.error}>* {error.platforms ? error.platforms : " "}</span><br></br></label>
+        <label>Platforms: <span className={styles.error}>* {error.platforms ? error.platforms : ""}</span><br></br></label>
         <label >
           <input className={styles.check} type="checkbox" name="PC" onChange={handleSelectPlatform} />
           PC <br></br>
