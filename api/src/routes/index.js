@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Videogame, Genre } = require("../db")
+const { Genre } = require("../db")
 const { findById, getAllGames, findByName, loadGenres, postGame } = require('../tools');
 
 const router = Router();

@@ -1,5 +1,5 @@
 import axios from "axios"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import styles from "./CtrlForm.module.css"
 
@@ -53,43 +53,49 @@ export default function CtrlForm() {
     }
     if (!input.released) {
       error.released = "The released date is required"
-    }else if (Date.parse(input.released) < Date.parse("1952-01-01") || Date.parse(input.released) > Date.now()) {
-        error.released = "Invalid date"
-      }
+    } else if (Date.parse(input.released) < Date.parse("1952-01-01") || Date.parse(input.released) > Date.now()) {
+      error.released = "Invalid date"
+    }
     if (input.platforms.length < 1) {
+      console.log("input plat.length < 1")
       error.platforms = "Select at least one platform"
     }
     if (input.genres.length < 1) {
       error.genres = "Select at least one genre"
+      console.log("input genre.length < 1")
     }
+    console.log("\n")
     return error
   }
 
   const handleSelectGenre = (e) => {
+    const change = input.genres.includes(e.target.name) ? input.genres.filter(el => el !== e.target.name) : [...input.genres, e.target.name]
     setInput({
       ...input,
-      genres: input.genres.includes(e.target.name) ? input.genres.filter(el => el !== e.target.name) : [...input.genres, e.target.name]
+      genres : change
     })
+    console.log(input)
     setError(validate({
       ...input,
-      [e.target.name]: e.target.value
+      genres: change
     }))
   }
   const handleSelectPlatform = (e) => {
+    const change = input.platforms.includes(e.target.name) ? input.platforms.filter(el => el !== e.target.name) : [...input.platforms, e.target.name]
     setInput({
       ...input,
-      platforms: input.platforms.includes(e.target.name) ? input.platforms.filter(el => el !== e.target.name) : [...input.platforms, e.target.name]
+      platforms: change
     })
     setError(validate({
       ...input,
-      [e.target.name]: e.target.value
+      platforms: change
     }))
   }
 
 
   const postGame = async (data) => {
-    const res = await axios.post("localhost:3001/videogame", data)
-    console.log(res)
+    const res = await axios.post("http://localhost:3001/videogame", data)
+    console.log(res.data)
   }
 
   const handleSubmit = (e) => {
@@ -105,15 +111,7 @@ export default function CtrlForm() {
     } else {
       postGame(input)
       alert('Game created successfully')
-      setInput({
-        name: "",
-        description: "",
-        rating: 0,
-        platforms: [],
-        image: "",
-        genres: [],
-        released: ""
-      })
+      window.location.reload()
     }
   }
 

@@ -11,19 +11,19 @@ export const GET_GENRES = 'GET_GENRES'
 export const searchGame = (id) => {
   if (typeof id === 'undefined') {
     return async function (dispatch) {
-      let r = await axios.get(`localhost:3001/videogames`)
+      let r = await axios.get(`http://localhost:3001/videogames`)
       return dispatch({ type: FIND_All_GAMES, payload: r.data })
     }
   }
   if (isNaN(Number(id)) && !/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i.test(id)) {
     return async function (dispatch) {
-      let r = await axios.get(`localhost:3001/videogames?name=${id}`)
+      let r = await axios.get(`http://localhost:3001/videogames?name=${id}`)
       return dispatch({ type: FIND_GAME_BY_ID, payload: r.data })
     }
   }
   else {
     return async function (dispatch) {
-      let r = await axios.get(`localhost:3001/videogame/${id}`)
+      let r = await axios.get(`http://localhost:3001/videogame/${id}`)
       return dispatch({ type: FIND_GAME_BY_ID, payload: r.data })
     }
   }
@@ -49,7 +49,7 @@ export const orderByRating = (ord) => {
 
 export const getGenres = () => {
   return async function (dispatch) {
-    let r = await axios.get(`localhost:3001/genres`)
+    let r = await axios.get(`http://localhost:3001/genres`)
     return dispatch({ type: GET_GENRES, payload: r.data })
   }
 }
