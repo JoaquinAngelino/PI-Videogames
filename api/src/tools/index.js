@@ -146,9 +146,6 @@ const loadGenres = async () => {
 // ------------------------------------
 // Retorna true si creó el game, caso contrario false
 const postGame = async (game) => {
-
-  console.log(game.name, game.image, game.rating, game.released, game.platforms, game.genres, game.description)
-
   const games = await findByName(game.name)
   const equal = games.filter(el => el.name.toLowerCase() === game.name.toLowerCase())
   if (equal.length) {
