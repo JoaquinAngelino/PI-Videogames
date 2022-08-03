@@ -57,14 +57,11 @@ export default function CtrlForm() {
       error.released = "Invalid date"
     }
     if (input.platforms.length < 1) {
-      console.log("input plat.length < 1")
       error.platforms = "Select at least one platform"
     }
     if (input.genres.length < 1) {
       error.genres = "Select at least one genre"
-      console.log("input genre.length < 1")
     }
-    console.log("\n")
     return error
   }
 
@@ -74,7 +71,6 @@ export default function CtrlForm() {
       ...input,
       genres : change
     })
-    console.log(input)
     setError(validate({
       ...input,
       genres: change
@@ -94,8 +90,7 @@ export default function CtrlForm() {
 
 
   const postGame = async (data) => {
-    const res = await axios.post("http://localhost:3001/videogame", data)
-    console.log(res.data)
+    await axios.post("http://localhost:3001/videogame", data)
   }
 
   const handleSubmit = (e) => {
