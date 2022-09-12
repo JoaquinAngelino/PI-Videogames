@@ -1,4 +1,4 @@
-import { FIND_GAME_BY_ID, FILTER_GAMES, ORDER_BY_RATING, ALPHABETIC_ORDER, FIND_All_GAMES, GET_GENRES, } from './actions'
+import { FIND_GAME_BY_ID, FILTER_GAMES, ORDER_BY_RATING, ALPHABETIC_ORDER, FIND_All_GAMES, GET_GENRES, CLEAR} from './actions'
 
 
 const initialState = {
@@ -15,7 +15,8 @@ function rootReducer(state = initialState, { type, payload }) {
     // ------------------------------------
     // ------------------------------------
     case FIND_GAME_BY_ID:
-      if (!payload) {
+      if (payload === null || !payload.length) {
+        alert("not found")
         return state
       }
       return { ...state, games: payload }
@@ -77,10 +78,14 @@ function rootReducer(state = initialState, { type, payload }) {
       return {...state, genres: payload}
     // ------------------------------------
     // ------------------------------------
+    case CLEAR:
+      return {...state, games: []}
+      // ------------------------------------
+      // ------------------------------------
     default:
       return state
-    // ------------------------------------
-    // ------------------------------------
+      // ------------------------------------
+      // ------------------------------------
   }
 }
 

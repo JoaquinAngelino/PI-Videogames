@@ -1,5 +1,7 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { clear } from '../../redux/actions';
 import style from './Card.module.css'
 import notAvaiable from "./img_not_avaiable.bmp"
 
@@ -9,8 +11,10 @@ export default function Card({id, name, image, rating, genres }) {
   genres.forEach((genre, idx) => {
     gameGenres.push(<li key={idx} className={style.cardLi}>{genre.name} </li>)
   });
+
+
   return (
-    <Link to={"/detail/" + id}>
+    <Link to={"/detail/" + id} onClick={useDispatch(clear()) }>
       <div className={style.card}>
         <img className={style.cardImg} src={image ? image : notAvaiable } alt={name} />
         <h2 className={style.cardTitle}>{name}</h2>

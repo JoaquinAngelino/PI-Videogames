@@ -17,7 +17,7 @@ export default function FormPage() {
     <>
       <Logo />
       <div className={style.formContainer}>
-        <h1>Create your own recipe.</h1>
+        <h1>Create your own Game.</h1>
         <CtrlForm />
       </div>
     </>

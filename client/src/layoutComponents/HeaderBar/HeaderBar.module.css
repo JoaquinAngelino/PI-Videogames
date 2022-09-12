@@ -9,6 +9,7 @@
 .searchInput {
   font-family: inherit;
   width: 50%;
+  height: 50px;
   border: 0;
   background-color: #454545;
   outline: 0;
